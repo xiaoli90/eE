@@ -1,0 +1,121 @@
+:root {
+    --mi-orange: #ff6700;
+    --mi-gray: #616161;
+    --mi-light-gray: #f5f5f5;
+    --mi-hover-gray: #f0f0f0;
+    --mi-border: #e0e0e0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: var(--mi-light-gray);
+    color: var(--mi-gray);
+    line-height: 1.6;
+}
+
+/* 小米风格导航栏 */
+.nav-bar {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-logo {
+    font-size: 1.4em;
+    font-weight: 500;
+    color: var(--mi-orange);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-menu .nav-item {
+    position: relative;
+}
+
+.nav-menu .nav-item a {
+    text-decoration: none;
+    color: var(--mi-gray);
+    font-size: 1em;
+    transition: color 0.3s;
+}
+
+.nav-menu .nav-item a:hover {
+    color: var(--mi-orange);
+}
+
+.nav-menu .nav-item.active a {
+    color: var(--mi-orange);
+}
+
+.nav-menu .nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--mi-orange);
+}
+
+/* 通用容器样式 */
+.container {
+    max-width: 1280px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 30px;
+}
+
+/* 通用按钮样式 */
+.mi-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--mi-orange);
+    color: white;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: all 0.3s;
+}
+
+.mi-button:hover {
+    background-color: #f25600;
+    transform: translateY(-1px);
+}
+
+/* 通用输入框样式 */
+.mi-input {
+    padding: 12px 16px;
+    border: 1px solid var(--mi-border);
+    border-radius: 4px;
+    outline: none;
+    font-size: 0.95em;
+    transition: all 0.3s;
+}
+
+.mi-input:focus {
+    border-color: var(--mi-orange);
+    box-shadow: 0 0 0 2px rgba(255, 103, 0, 0.1);
+} 

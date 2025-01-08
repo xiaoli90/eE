@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单词量化表</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/vocabulary.css">
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <div class="nav-logo">记忆学习系统</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html">记忆复习</a>
+                </li>
+                <li class="nav-item active">
+                    <a href="vocabulary.html">量化表</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="sidebar">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索块标题...">
+            </div>
+            <div class="nav-header">块目录</div>
+            <ul id="block-list">
+                <!-- 块列表将动态生成 -->
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <div class="statistics-panel">
+                <div class="stats-header">
+                    <h3>单词统计</h3>
+                    <button id="start-review" class="mi-button">开始复习</button>
+                </div>
+                <div class="stats">
+                    <div class="stats-left">
+                        <div class="stat-item">
+                            <span class="stat-label">总单词量</span>
+                            <span id="total-words" class="stat-value">0</span>
+                        </div>
+                        <div class="target-section">
+                            <button id="set-target" class="mi-button">设定目标</button>
+                            <div>
+                                <div class="target-group">
+                                    <span class="target-label">目标</span>
+                                    <span id="target-number" class="target-number">-</span>
+                                    <span class="target-unit">词</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress-circle">
+                        <svg width="80" height="80">
+                            <circle class="background" cx="40" cy="40" r="36"></circle>
+                            <circle class="progress" cx="40" cy="40" r="36"></circle>
+                        </svg>
+                        <span class="progress-text">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <section class="add-block">
+                <input type="text" id="block-title" placeholder="输入块标题" class="mi-input">
+                <button id="add-block-button" class="mi-button">创建新块</button>
+            </section>
+
+            <section class="blocks-container" id="blocks-container">
+                <!-- 块将动态生成 -->
+                <div class="word-item">
+                    <div class="word-content">
+                        <span class="word-number">1</span>
+                        <div class="word-text-group">
+                            <span class="word-text">word</span>
+                            <span class="word-translation masked">译文</span>
+                        </div>
+                    </div>
+                    <div class="word-actions">
+                        <button class="edit-word-button">
+                            <span class="material-icons">edit</span>
+                        </button>
+                        <button class="delete-word-button">
+                            <span class="material-icons">delete</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 成就提示 -->
+    <div id="achievement-toast" class="achievement-toast">
+        <div class="check-circle">
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+        </div>
+        <span class="achievement-message">你完成了目标！</span>
+    </div>
+
+    <!-- 添加单词弹窗 -->
+    <div id="add-words-modal" class="mi-modal">
+        <div class="mi-modal-content">
+            <div class="mi-modal-header">
+                <h3>添加单词</h3>
+                <button class="mi-modal-close" onclick="closeAddWordsModal()">×</button>
+            </div>
+            <div class="mi-modal-body">
+                <div class="word-input-fields">
+                    <input type="text" class="word-input" placeholder="输入单词">
+                    <input type="text" class="translation-input" placeholder="输入译文">
+                </div>
+            </div>
+            <div class="mi-modal-footer">
+                <button class="mi-button-text" onclick="closeAddWordsModal()">取消</button>
+                <button class="mi-button" onclick="saveWords()">保存</button>
+            </div>
+        </div>
+    </div>
+    <!-- 错误提示 -->
+    <div id="error-toast" class="error-toast">
+        <div class="error-circle">
+            <svg class="error-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="error-circle-path" cx="26" cy="26" r="25" fill="none"/>
+                <path class="error-cross" fill="none" d="M16 16 L36 36 M36 16 L16 36"/>
+            </svg>
+         </div>
+         <span class="error-message">您重复添加了单词，已帮您删除该单词！</span>
+     </div>
+ 
+     <!-- 删除确认弹窗 -->
+     <div id="delete-confirm-modal" class="mi-modal">
+         <div class="mi-modal-content">
+             <div class="mi-modal-header">
+                 <h3>删除确认</h3>
+                 <button class="mi-modal-close" onclick="closeDeleteConfirmModal()">×</button>
+             </div>
+             <div class="mi-modal-body">
+                 <p class="confirm-message">确定要删除该单词吗？</p>
+             </div>
+             <div class="mi-modal-footer">
+                 <button class="mi-button-text" onclick="closeDeleteConfirmModal()">取消</button>
+                 <button class="mi-button mi-button-danger" onclick="confirmDelete()">删除</button>
+             </div>
+         </div>
+     </div>
+ 
+     <!-- 编辑单词弹窗 -->
+     <div id="edit-word-modal" class="mi-modal">
+         <div class="mi-modal-content">
+             <div class="mi-modal-header">
+                 <h3>编辑单词</h3>
+                 <button class="mi-modal-close" onclick="closeEditWordModal()">×</button>
+             </div>
+             <div class="mi-modal-body">
+                 <div class="edit-input-group">
+                     <input type="text" id="edit-word-input" class="mi-input" placeholder="输入单词">
+                     <input type="text" id="edit-translation-input" class="mi-input" placeholder="输入译文">
+                 </div>
+             </div>
+             <div class="mi-modal-footer">
+                 <button class="mi-button-text" onclick="closeEditWordModal()">取消</button>
+                 <button class="mi-button" onclick="confirmEdit()">保存</button>
+             </div>
+         </div>
+     </div>
+ 
+     <!-- 删除块确认弹窗 -->
+     <div id="delete-block-modal" class="mi-modal">
+         <div class="mi-modal-content">
+             <div class="mi-modal-header">
+                 <h3>删除确认</h3>
+                 <button class="mi-modal-close" onclick="closeDeleteBlockModal()">×</button>
+             </div>
+             <div class="mi-modal-body">
+                 <p class="confirm-message">确定要删除该块及其所有单词吗？</p>
+             </div>
+             <div class="mi-modal-footer">
+                 <button class="mi-button-text" onclick="closeDeleteBlockModal()">取消</button>
+                 <button class="mi-button mi-button-danger" onclick="confirmDeleteBlock()">删除</button>
+             </div>
+         </div>
+     </div>
+ 
+     <!-- 添加复习模态框 -->
+     <div id="review-modal" class="mi-modal">
+         <div class="mi-modal-content review-modal-content">
+             <div class="mi-modal-header">
+                 <h3>复习设置</h3>
+                 <button class="mi-modal-close" onclick="closeReviewModal()">×</button>
+             </div>
+             <div class="mi-modal-body">
+                 <div class="review-options">
+                     <div class="review-mode-section">
+                         <h4>选择复习模式</h4>
+                         <div class="radio-group">
+                             <label class="mi-radio">
+                                 <input type="radio" name="review-mode" value="all" checked>
+                                 <span class="radio-text">全单词随机</span>
+                             </label>
+                             <label class="mi-radio">
+                                 <input type="radio" name="review-mode" value="single">
+                                 <span class="radio-text">单词随机</span>
+                             </label>
+                             <label class="mi-radio">
+                                 <input type="radio" name="review-mode" value="multiple">
+                                 <span class="radio-text">多选单词随机</span>
+                             </label>
+                         </div>
+                     </div>
+
+                     <div id="word-count-section" class="word-count-section">
+                         <h4>复习单词数量</h4>
+                         <input type="number" id="review-word-count" class="mi-input" min="1" placeholder="请输入要复习的单词数">
+                     </div>
+
+                     <div id="block-selection-section" class="block-selection-section" style="display: none;">
+                         <h4>选择复习块</h4>
+                         <div class="search-box">
+                             <input type="text" id="review-search-input" class="mi-input" placeholder="搜索块标题...">
+                         </div>
+                         <div class="block-list">
+                             <!-- 块列表将动态生成 -->
+                         </div>
+                     </div>
+
+                     <div class="review-type-section">
+                         <h4>复习类型</h4>
+                         <div class="checkbox-group">
+                             <label class="mi-checkbox">
+                                 <input type="radio" name="review-type" value="word" checked>
+                                 <span class="checkbox-text">单词默写</span>
+                             </label>
+                             <label class="mi-checkbox">
+                                 <input type="radio" name="review-type" value="translation">
+                                 <span class="checkbox-text">译文默写</span>
+                             </label>
+                             <label class="mi-checkbox">
+                                 <input type="radio" name="review-type" value="mixed">
+                                 <span class="checkbox-text">混合默写</span>
+                             </label>
+                             <label class="mi-checkbox">
+                                 <input type="radio" name="review-type" value="audio">
+                                 <span class="checkbox-text">语音默写</span>
+                             </label>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <div class="mi-modal-footer">
+                 <button class="mi-button-text" onclick="closeReviewModal()">取消</button>
+                 <button class="mi-button" onclick="startReview()">开始复习</button>
+             </div>
+         </div>
+     </div>
+      
+    <!-- 添加复习界面模态框 -->
+    <div id="review-session-modal" class="mi-modal">
+        <div class="mi-modal-content review-session-content">
+            <div class="mi-modal-header">
+                <div class="review-progress">
+                    <span id="current-word-number">1</span>
+                    /
+                    <span id="total-words-number">10</span>
+                </div>
+                <button class="mi-modal-close" onclick="closeReviewSession()">×</button>
+            </div>
+            <div class="mi-modal-body">
+                <div class="review-card">
+                    <div class="review-question">
+                        <span id="review-prompt"></span>
+                        <span id="review-text" class="review-text"></span>
+                    </div>
+                    <div class="review-input-area">
+                        <input type="text" id="review-input" class="mi-input" placeholder="请输入答案">
+                        <div class="review-result" id="review-result">
+                            <span class="result-text"></span>
+                            <span class="correct-answer"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mi-modal-footer">
+                <div class="review-stats">
+                    <span>正确: <span id="correct-count">0</span></span>
+                    <span>错误: <span id="wrong-count">0</span></span>
+                </div>
+                <div class="review-actions">
+                    <button class="mi-button-text" onclick="showAnswer()">显示答案</button>
+                    <button class="mi-button" onclick="nextWord()">下一个</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/vocabulary.js"></script>
+</body>
+</html> 

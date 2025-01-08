@@ -1,0 +1,393 @@
+/* 导入基础样式 */
+@import 'common.css';
+
+/* 添加课文区域样式 */
+.add-text {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    gap: 10px;
+}
+
+.add-text input {
+    flex: 1;
+    max-width: 400px;
+    padding: 15px 20px;
+    border: 1px solid var(--mi-border);
+    border-radius: 4px;
+    outline: none;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.add-text input:focus {
+    border-color: var(--mi-orange);
+    box-shadow: 0 0 0 2px rgba(255, 103, 0, 0.1);
+}
+
+.add-text button {
+    padding: 15px 30px;
+    border: none;
+    background-color: var(--mi-orange);
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.add-text button:hover {
+    background-color: #f25600;
+    transform: translateY(-1px);
+}
+
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+    padding: 30px 40px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    position: relative;
+    transition: all 0.3s ease;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.card.done {
+    background-color: var(--mi-light-gray);
+}
+
+.card-number {
+    position: absolute;
+    top: 25px;
+    left: -20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--mi-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+    font-size: 1.1em;
+    box-shadow: 0 2px 4px rgba(255, 103, 0, 0.3);
+}
+
+.card h3 {
+    margin: 0 0 20px 30px;
+    font-size: 1.4em;
+    color: #333;
+    font-weight: 500;
+}
+
+.card-statistics {
+    background-color: var(--mi-light-gray);
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin: 10px 0;
+}
+
+.card-statistics p {
+    margin: 8px 0;
+    color: var(--mi-gray);
+    font-size: 0.95em;
+}
+
+.timer {
+    font-size: 1.1em;
+    color: var(--mi-gray);
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+button.complete-button,
+button.delete-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: all 0.3s ease;
+}
+
+button.complete-button {
+    background-color: var(--mi-orange);
+    color: white;
+}
+
+button.complete-button:hover {
+    background-color: #f25600;
+    transform: translateY(-1px);
+}
+
+button.complete-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+button.delete-button {
+    background-color: white;
+    color: var(--mi-gray);
+    border: 1px solid #e0e0e0;
+}
+
+button.delete-button:hover {
+    background-color: #fafafa;
+    color: #333;
+    border-color: #ccc;
+}
+
+.message {
+    margin-top: 15px;
+    color: var(--mi-orange);
+    font-weight: 500;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 95%;
+        padding: 25px;
+    }
+
+    .add-text input {
+        width: 60%;
+    }
+
+    .card-number {
+        left: -15px;
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Additional styles for better aesthetics */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+header h1 {
+    font-size: 2em;
+    color: #333;
+}
+
+.add-text input {
+    border: 2px solid #4caf50;
+}
+
+.add-text button {
+    background-color: #4caf50;
+    font-weight: bold;
+}
+
+.progress-bar {
+    display: none;
+}
+
+.progress {
+    display: none;
+}
+
+/* 添加容器布局 */
+.container {
+    display: flex;
+    gap: 30px;
+    max-width: 1600px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+    width: 250px;
+    min-width: 250px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    height: calc(100vh - 150px);
+    position: sticky;
+    top: 80px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mi-orange) #f1f1f1;
+}
+
+.nav-header {
+    padding: 20px;
+    font-size: 1.1em;
+    color: var(--mi-gray);
+    border-bottom: 1px solid #eee;
+    font-weight: 500;
+    background-color: #fafafa;
+}
+
+#nav-list {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9em;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.nav-item:hover {
+    background-color: var(--mi-light-gray);
+    padding-left: 20px;
+}
+
+.nav-item.active {
+    background-color: var(--mi-light-gray);
+    color: var(--mi-orange);
+    font-weight: 500;
+}
+
+.nav-number {
+    width: 20px;
+    height: 20px;
+    background-color: var(--mi-orange);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+}
+
+.nav-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+/* 主内容区域 */
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* 调整序号大小 */
+.card-number {
+    width: 60px;
+    height: 60px;
+    font-size: 1.4em;
+    left: -30px;
+}
+
+/* 响应式调整 */
+@media (max-width: 1024px) {
+    .sidebar {
+        display: none;
+    }
+    
+    .main-content {
+        width: 100%;
+    }
+}
+
+/* 测试面板样式 */
+.test-panel {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.test-panel h3 {
+    margin-bottom: 15px;
+    color: var(--mi-gray);
+}
+
+.review-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.review-item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    background-color: white;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    min-width: 200px;
+    flex: 0 1 calc(33.333% - 10px);
+}
+
+.review-item:hover {
+    background-color: var(--mi-light-gray);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.review-item-number {
+    width: 24px;
+    height: 24px;
+    background-color: var(--mi-orange);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+}
+
+/* 响应式布局 */
+@media (max-width: 1200px) {
+    .review-item {
+        flex: 0 1 calc(50% - 10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .review-item {
+        flex: 0 1 100%;
+    }
+}
+
+/* End of styles.css */ 

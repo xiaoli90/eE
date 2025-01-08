@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>记忆复习系统</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <div class="nav-logo">记忆学习系统</div>
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="index.html">记忆复习</a>
+                </li>
+                <li class="nav-item">
+                    <a href="vocabulary.html">量化表</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <nav class="sidebar">
+            <div class="nav-header">课文目录</div>
+            <ul id="nav-list">
+                <!-- 导航列表将通过 JavaScript 动态生成 -->
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <section class="add-text">
+                <input type="text" id="text-name" placeholder="输入课文名称">
+                <button id="add-text-button">添加课文</button>
+            </section>
+
+            <section class="test-panel">
+                <h3>待复习课文</h3>
+                <ul id="review-list" class="review-list">
+                    <!-- 待复习的课文将动态生成在这里 -->
+                </ul>
+            </section>
+
+            <section class="cards-container" id="cards-container">
+                <!-- 卡片将动态生成 -->
+            </section>
+        </main>
+    </div>
+    <audio id="notification" src="./Music/top.mp3" preload="auto"></audio>
+</body>
+<script src="./scripts/script.js"></script>
+</html> 
